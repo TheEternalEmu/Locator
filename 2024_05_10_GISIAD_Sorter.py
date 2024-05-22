@@ -1,3 +1,6 @@
+import glob
+import csv
+import copy
 ILE = "I"
 VAL = "V"
 POSITION=108
@@ -19,13 +22,19 @@ class FastaPoint:
     loc=""
     year=""
     id=""
-
+    flag=True
     def __init__(self, head, seq):
         self.head= head
         self.seq = seq
-        self.id = head.split('|')[2]
-        self.specie = head.split('/')[1]
-        self.year = head.split('/')[4]
+        try: 
+            self.id = head.split('|')[2]
+            self.specie = head.split('/')[1]
+            self.year = head.split('/')[4]
+
+        except:
+            # print(head, " is causing errors")
+            self.flag = False
+        
 
     # Gets the character at a given position from the sequence
     def getSeqPos(self, pos=108):
@@ -46,8 +55,11 @@ class CounterOutput:
 
 class FastaPointManager:
     points = []
-    def getByFile(self):
-        with open(File, "r") as f:
+    name=''
+    # Create fasta points given a fileName
+    def getByFile(self, fileName=FILE):
+        self.name= fileName
+        with open(fileName, "r") as f:
             p1=0
             p2=0
             txt = f.read()
@@ -70,37 +82,49 @@ class FastaPointManager:
                     else:
                         body+=lines[y]
                 self.points.append(FastaPoint(head, body))
-                        
+    # Check how many points have a given letter at a given pos                    
     def countCorrectPos(self, check, pos):
         counter=0
         res = []
         for x in self.points:
-            y = x.posChecker(check, pos)
-            if y!=False:
-                counter+=1
-                res.append(y)
+            if(x.flag == True):
+                y = x.posChecker(check, pos)
+                if y!=False:
+                    counter+=1
+                    res.append(y)
         return(
             CounterOutput(counter, res)
         )
 
-manager = FastaPointManager()
-manager.getByFile()
-x = manager.countCorrectPos(Val,Position)
-z = manager.countCorrectPos(Ile,Position)
-output_Ile = ""
-output_Val = ""
 
+def GetDataFromFiles():
+    files = glob.glob('*.fasta', root_dir='./Analyzed')
+    fileManagers = []
+    outcome = []
+    for y  in files:
+        manager = FastaPointManager()
+        manager.getByFile('./Analyzed/'+y.title())
+        data = y.title().split('_')
+        animal = data[1]
+        year = data[2]
+        loc = data[3].split('.')[0]
+        out1 = manager.countCorrectPos(VAL, POSITION)
+        out2 = manager.countCorrectPos(ILE,POSITION)
+        test = [year, animal, loc, len(manager.points) , out1.count, out2.count]
+        outcome.append(test)
+        fileManagers.append(manager)
+    for x in fileManagers:
+        print(x.name)
+    return(outcome)
 
-for y in x.ids:
-    output_Val+=y + "\n"
+def makeCSV():
+    filename='output.csv'
+    fields = ["Year","Specie", "Location", "Total Seq", "VAL", "ILE"]
+    with open(filename, 'w') as f:
+        outcome = GetDataFromFiles()
+        writer = csv.writer(f)
+        writer.writerow(fields)
+        for x in outcome:
+            writer.writerow(x)
 
-for y in z.ids:
-    output_Ile+=y + "\n"
-    
-
-print("109V Sequence IDs:","\n", output_Val)
-print("109I Sequence IDs:","\n", output_Ile)
-print("File:", File)
-print("Number of sequences containing",Position+1,Ile, ":", x.count)
-print("Number of sequences containing",Position+1,Val,":", z.count)
-print("Total Number of Sequences:", headCount(File))
+makeCSV()
