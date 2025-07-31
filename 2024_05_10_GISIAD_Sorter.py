@@ -96,7 +96,6 @@ class FastaPointManager:
             CounterOutput(counter, res)
         )
 
-
 def GetDataFromFiles():
     files = glob.glob('*.fasta', root_dir='./Analyzed')
     fileManagers = []
