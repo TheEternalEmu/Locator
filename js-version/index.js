@@ -6,7 +6,6 @@ const ILE = "I";
 const VAL = "V";
 const POSITION = 108;
 const FILE = "gisaid_epiflu_sequence.fasta";
-const TOTAL_SEQ = 0;
 const FILE_PATH = path.join(__dirname, "../", FILE);
 
 async function getNumberOfSequences(filePath = FILE_PATH) {
@@ -21,22 +20,21 @@ async function getNumberOfSequences(filePath = FILE_PATH) {
         console.error(error);
     }
 }
-async function checkLetterPresentInDesiredPosition(filePath = FILE_PATH, letter = VAL, position = POSITION) {
+function checkLetterPresentInDesiredPosition(filePath = FILE_PATH, letter = VAL, position = POSITION) {
     try {
         
         console.log(`Reading file at: ${filePath}\n`);
-        const rawTextData = await fs.promises.readFileSync(filePath);
+        const rawTextData = fs.readFileSync(filePath);
         if (!rawTextData) throw new Error("Something went wrong while reading the file");
         console.log(`File parsed successfully!\n`);
         const fileLines = rawTextData.toString().split('>').filter(Boolean).map((line) => {
             const splits = line.trim().split('\n')
             const fastaHeader = splits[0].trim();
-            const fastaSequence = splits.slice(1).join('').triM();
+            const fastaSequence = splits.slice(1).join('').trim();
             const presense = fastaSequence[position].toUpperCase() === letter.toUpperCase();
             return [fastaHeader, fastaSequence, presense];
         });
         console.log(`Sequence parsed successfully!\nResult:\n`);
-        console.log(fileLines);
         return fileLines
     } catch (err) {
         console.error(err);
@@ -70,9 +68,17 @@ async function checkLetterPresentInDesiredPositionMoreEfficiently(filePath = FIL
                 sequenceChunk.push(line.trim())
             }
         }
-        console.log(results)
         return results
     } catch (err) {
         console.error(err);
     }
 }
+
+async function test(f,name){
+    console.time(name)
+    f()
+    console.timeEnd(name)
+}
+
+test(() => checkLetterPresentInDesiredPosition(),"checkLetterPresentInDesiredPosition")
+test(() => checkLetterPresentInDesiredPositionMoreEfficiently(), "checkLetterPresentInDesiredPositionMoreEfficiently")
