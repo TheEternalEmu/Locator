@@ -74,11 +74,11 @@ async function checkLetterPresentInDesiredPositionMoreEfficiently(filePath = FIL
     }
 }
 
-async function test(f,name){
+async function benchmark(f,name){
     console.time(name)
     f()
     console.timeEnd(name)
 }
 
-test(() => checkLetterPresentInDesiredPosition(),"checkLetterPresentInDesiredPosition")
-test(() => checkLetterPresentInDesiredPositionMoreEfficiently(), "checkLetterPresentInDesiredPositionMoreEfficiently")
+benchmark(() => checkLetterPresentInDesiredPosition(),"checkLetterPresentInDesiredPosition")
+benchmark(() => checkLetterPresentInDesiredPositionMoreEfficiently(), "checkLetterPresentInDesiredPositionMoreEfficiently")
