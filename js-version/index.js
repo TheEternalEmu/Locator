@@ -1,4 +1,5 @@
 const fs = require("fs");
+const readline = require("readline");
 const path = require("path");
 
 const ILE = "I";
@@ -20,27 +21,18 @@ async function getNumberOfSequences(filePath = FILE_PATH) {
         console.error(error);
     }
 }
-async function convertRawFileIntoDataStructure(filePath = FILE_PATH) {
-    try {
-        const data = await fs.readFileSync(filePath);
-        if (!data) throw new Error("Something went wrong when reading the file");
-        const lines = data.toString().split('\n');
-        console.log(lines.length);
-    } catch (err) {
-        console.error(err);
-    }
-}
 async function checkLetterPresentInDesiredPosition(filePath = FILE_PATH, letter = VAL, position = POSITION) {
     try {
+        
         console.log(`Reading file at: ${filePath}\n`);
-        const rawTextData = await fs.readFileSync(filePath);
+        const rawTextData = await fs.promises.readFileSync(filePath);
         if (!rawTextData) throw new Error("Something went wrong while reading the file");
         console.log(`File parsed successfully!\n`);
-        const fileLines = rawTextData.toString().split('>').filter((line) => line !== '').map((line) => {
-            const splits = line.split('\n')
-            const fastaHeader = splits[0];
-            const fastaSequence = splits.slice(1).join('');
-            const presense = fastaSequence[position] === letter;
+        const fileLines = rawTextData.toString().split('>').filter(Boolean).map((line) => {
+            const splits = line.trim().split('\n')
+            const fastaHeader = splits[0].trim();
+            const fastaSequence = splits.slice(1).join('').triM();
+            const presense = fastaSequence[position].toUpperCase() === letter.toUpperCase();
             return [fastaHeader, fastaSequence, presense];
         });
         console.log(`Sequence parsed successfully!\nResult:\n`);
@@ -48,6 +40,39 @@ async function checkLetterPresentInDesiredPosition(filePath = FILE_PATH, letter 
         return fileLines
     } catch (err) {
         console.error(err);
+        return []
     }
 }
-checkLetterPresentInDesiredPosition();
+async function checkLetterPresentInDesiredPositionMoreEfficiently(filePath = FILE_PATH, letter = VAL, position = POSITION) {
+    const results = []
+    const fileStream = fs.createReadStream(filePath);
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    })
+    try {
+        let header = ''
+        let sequenceChunk = []
+
+        for await(const line of rl){
+            if(line.startsWith('>')){
+                if(header){
+                    const sequence = sequenceChunk.join('')
+                    const isCharacterPresent = sequence[position].toUpperCase() === letter.toUpperCase()
+                    results.push({
+                        header,
+                        isCharacterPresent
+                    })
+                }
+                header = line.slice(1).trim()
+                sequenceChunk = []
+            }else {
+                sequenceChunk.push(line.trim())
+            }
+        }
+        console.log(results)
+        return results
+    } catch (err) {
+        console.error(err);
+    }
+}
