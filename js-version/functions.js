@@ -8,8 +8,7 @@ const POSITION = 108;
 const FILE = "gisaid_epiflu_sequence.fasta";
 const FILE_PATH = path.join(dirname(import.meta.url), "../", FILE);
 
-
-async function getNumberOfSequences(filePath = FILE_PATH) {
+export async function getNumberOfSequences(filePath = FILE_PATH) {
     try {
         let data = filePath
         if (typeof filePath === 'string') {
