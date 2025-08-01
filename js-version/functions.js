@@ -1,12 +1,17 @@
 import fs from "fs";
-import path, { dirname } from "path";
+import path from "path";
 import readline from "readline";
+
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const ILE = "I";
 const VAL = "V";
 const POSITION = 108;
-const FILE = "gisaid_epiflu_sequence.fasta";
-const FILE_PATH = path.join(dirname(import.meta.url), "../", FILE);
+const FILE = "H5N1_PB2_Example.fasta";
+const FILE_PATH = path.join(__dirname, "../", FILE);
 
 export async function getNumberOfSequences(filePath = FILE_PATH) {
     try {
