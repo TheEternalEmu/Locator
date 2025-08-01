@@ -1,109 +1,123 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
-body{
-    background-color: rgb(32,32,32);
+body {
+  background-color: rgb(32, 32, 32);
 }
 main {
-    /* flex:1; */
-    color:white;
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(32,32,32);
-    align-items: center;
-    justify-content: center;
+  /* flex:1; */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(32, 32, 32);
+  align-items: center;
+  justify-content: center;
 }
-#uploader{
-    width: clamp(20em, 100%, 80em);
-    padding:2em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(58, 58, 58);
-    border-radius: 1em;
-    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
-    gap:1em;
+#uploader {
+  width: clamp(20em, 100%, 80em);
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(58, 58, 58);
+  border-radius: 1em;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
+  gap: 1em;
 }
-#uploader>.inputs {
-    display: flex;
-    flex-direction: row;
-    gap:1em;
+#uploader > .inputs {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
 }
-#uploader>.inputs>button {
-    padding:2em;
-    width:clamp(5em, 10em, 20em);
-    background-color: rgb(32,32,32);
-    color:white;
-    border: 1px solid white;
-    cursor: pointer;
-    border-radius: 1em;
+#uploader > .inputs > button {
+  padding: 1em;
+  width: clamp(5em, 10em, 20em);
+  background-color: rgb(32, 32, 32);
+  color: white;
+  border: 1px solid white;
+  cursor: pointer;
+  border-radius: 1em;
+  font-size: 1em;
+}
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  padding: 2em;
+}
+.submitButton {
+  background-color: aquamarine;
+  color: black;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
 }
 input {
-    padding:2em;
-    background-color: rgb(32,32,32);
-    color:white;
-    border: 1px solid white;
-    border-radius: 1em;
+  padding: 1em;
+  background-color: rgb(32, 32, 32);
+  color: white;
+  border: 1px solid white;
+  border-radius: 1em;
+  font-size: 1em;
 }
-h2{
-    padding:1em;
-    text-align: center;
+h2 {
+  padding: 1em;
+  text-align: center;
 }
-main>div button {
-    padding:2em;
-    width:clamp(5em, 10em, 20em);
-    background-color: rgb(32,32,32);
-    color:white;
-    border: 1px solid white;
-    cursor: pointer;
-    border-radius: 1em;
+main > div button {
+  padding: 1em;
+  font-size: 1em;
+  width: clamp(5em, 10em, 20em);
+  background-color: rgb(32, 32, 32);
+  color: white;
+  border: 1px solid white;
+  cursor: pointer;
+  border-radius: 1em;
 }
 .active {
-    background-color: rgb(169, 255, 71);
-    color:black;
-    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
+  background-color: rgb(169, 255, 71);
+  color: black;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
 }
 header {
-    width:100%;
-    background-color: rgb(32,32,32);
-    color:white;
-    text-align: center;
-    padding: 3em;
+  width: 100%;
+  background-color: rgb(32, 32, 32);
+  color: white;
+  text-align: center;
+  padding: 3em;
 }
-#results{
-    margin-top: 2em;
-    margin-bottom: 4em;
-    display: flex;
-    flex-direction: column;
-    gap:1em;
+#results {
+  margin-top: 2em;
+  margin-bottom: 4em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
-.resultant{
-    padding:2em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(58, 58, 58);
-    border-radius: 1em;
-    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
-    gap:1em;
+.resultant {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(58, 58, 58);
+  border-radius: 1em;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
+  gap: 1em;
 }
-.resultant>p{
-    color:white;
+.resultant > p {
+  color: white;
 }
-.resultant>p.present {
-    color:red;
+.resultant > p.present {
+  color: red;
 }
 #options {
-    display: flex;
-    flex-direction: row;
-    gap:1em;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
 }
-#options input{
-    width:50ch;
-
+#options input {
+  width: 50ch;
 }
