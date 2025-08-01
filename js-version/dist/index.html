@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <link rel="stylesheet" href="index.css">
     </head>
+
     <body>
         <main>
             <header>
@@ -12,17 +14,22 @@
                 <h2>Upload Your File</h2>
                 <div class="inputs">
                     <input type="file" id="fileInput" accept=".fasta" required />
-                    <button id="button" onclick="upload()">Upload</button>
+                    <input type="text" id="indicator" placeholder="Enter Indicator Here">
+                    <input type="text" id="position" placeholder="Enter Position Here">
                 </div>
-            </div>
-            <div id="options">
-                <div>
-                    <h2>Sort By</h2>                
-                    <button onclick="sortByPresent()">Presense</button>
+                <div id="options">
+                    <div>
+                        <h2>Sort By</h2>
+                        <button onclick="sortByPresent()">Presense</button>
+                    </div>
+                    <div>
+                        <h2>Search</h2>
+                        <input type="text" id="searchbar" placeholder="Enter Text Here">
+                    </div>
                 </div>
-                <div>
-                    <h2>Search</h2>
-                    <input type="text" id="searchbar" placeholder="Enter Text Here">
+                <div class="buttons">
+                    <button id="cancel" class="submitButton" onclick="">Cancel</button>
+                    <button id="button" class="submitButton" onclick="upload()">Upload</button>
                 </div>
             </div>
             <div id="results">
@@ -31,38 +38,38 @@
         <script>
             const input = document.getElementById('fileInput')
             const searchbar = document.getElementById('searchbar')
-                        const resultantData = []
+            const resultantData = []
 
             const resultsDiv = document.getElementById('results')
-            searchbar.addEventListener('input', (e)=>{
+            searchbar.addEventListener('input', (e) => {
                 resultsDiv.innerHTML = ''
-                resultantData.filter((data)=>{
+                resultantData.filter((data) => {
                     return data.header.toLowerCase().includes(e.target.value.toLowerCase())
                 }).forEach(showResults)
             })
-            input.addEventListener('change', (e)=>{
-                if(e.target.files.length){
-                 document.getElementById('button').classList.add('active')
-                }else {
+            input.addEventListener('change', (e) => {
+                if (e.target.files.length) {
+                    document.getElementById('button').classList.add('active')
+                } else {
                     document.getElementById('button').classList.remove('active')
                 }
             })
-            function showResults(data){
+            function showResults(data) {
                 const parent = document.createElement('div')
                 parent.classList.add('resultant')
                 const header = document.createElement('h4')
                 header.innerText = data.header
                 const isCharacterPresent = document.createElement('p')
-                isCharacterPresent.innerText = data.isCharacterPresent?"Present":"Not Present"
-                isCharacterPresent.classList[data.isCharacterPresent?"add":"remove"]('present')
+                isCharacterPresent.innerText = data.isCharacterPresent ? "Present" : "Not Present"
+                isCharacterPresent.classList[data.isCharacterPresent ? "add" : "remove"]('present')
                 parent.appendChild(header)
                 parent.appendChild(isCharacterPresent)
                 resultsDiv.appendChild(parent)
             }
-            function sortByPresent(){
-                resultantData.sort((a,b)=>{
-                    if(a.isCharacterPresent && !b.isCharacterPresent) return -1
-                    if(!a.isCharacterPresent && b.isCharacterPresent) return 1
+            function sortByPresent() {
+                resultantData.sort((a, b) => {
+                    if (a.isCharacterPresent && !b.isCharacterPresent) return -1
+                    if (!a.isCharacterPresent && b.isCharacterPresent) return 1
                     return 0
                 })
                 resultsDiv.innerHTML = ''
@@ -70,7 +77,7 @@
             }
             async function upload() {
                 const file = input.files[0];
-                if(!file) return
+                if (!file) return
                 const data = await fetch('/upload', {
                     method: 'POST',
                     headers: {
@@ -80,7 +87,7 @@
                     body: file
                 })
                 const parsed = await data.json()
-                for(let i = 0; i < parsed.data.length; i++){
+                for (let i = 0; i < parsed.data.length; i++) {
                     showResults(parsed.data[i])
                     resultantData.push(parsed.data[i])
                 }
