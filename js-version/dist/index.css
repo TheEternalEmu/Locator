@@ -13,24 +13,33 @@ main {
   display: flex;
   flex-direction: column;
   background-color: rgb(32, 32, 32);
-  align-items: center;
-  justify-content: center;
+}
+.sidepanel{
+  width:450px;
+  background-color: rgb(20, 20, 20);
+  padding:1em;
+}
+.sidepanel>header {
+  width: 100%;
+  color: white;
+  text-align: center;
 }
 #uploader {
   width: clamp(20em, 100%, 80em);
-  padding: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgb(58, 58, 58);
-  border-radius: 1em;
-  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
   gap: 1em;
 }
+#uploader >h2{
+  text-align: left;
+  width: 100%;
+}
 #uploader > .inputs {
+  width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 1em;
 }
 #uploader > .inputs > button {
@@ -42,6 +51,14 @@ main {
   cursor: pointer;
   border-radius: 1em;
   font-size: 1em;
+}
+.sidepanel #options {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.sidepanel #options input {
+  width: 50ch;
 }
 .buttons {
   display: flex;
@@ -63,10 +80,6 @@ input {
   border-radius: 1em;
   font-size: 1em;
 }
-h2 {
-  padding: 1em;
-  text-align: center;
-}
 main > div button {
   padding: 1em;
   font-size: 1em;
@@ -81,13 +94,6 @@ main > div button {
   background-color: rgb(169, 255, 71);
   color: black;
   box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
-}
-header {
-  width: 100%;
-  background-color: rgb(32, 32, 32);
-  color: white;
-  text-align: center;
-  padding: 3em;
 }
 #results {
   margin-top: 2em;
@@ -112,12 +118,4 @@ header {
 }
 .resultant > p.present {
   color: red;
-}
-#options {
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-}
-#options input {
-  width: 50ch;
 }
