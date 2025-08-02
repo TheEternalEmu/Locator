@@ -89,6 +89,16 @@ main {
   gap: 1em;
   padding: 2em;
 }
+.buttons > button {
+  padding: 1em;
+  width: clamp(5em, 10em, 20em);
+  background-color: rgb(88, 210, 171);
+  color: black;
+  cursor: pointer;
+  border-radius: 2em;
+  border: 0.2em solid rgb(142, 184, 255);
+  font-size: 1em;
+}
 .submitButton {
   background-color: aquamarine;
   color: black;
