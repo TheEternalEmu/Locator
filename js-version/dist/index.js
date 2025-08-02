@@ -1,15 +1,22 @@
-const input = document.getElementById('fileInput')
+const fileInput = document.getElementById('fileInput')
 const searchbar = document.getElementById('searchbar')
 const resultantData = []
+const elementsWithID = Array.from(document.querySelectorAll('[id]'))
+const dom = {}
 
+elementsWithID.forEach((element) => {
+    dom[element.id] = element
+})
+console.log(dom)
 const resultsDiv = document.getElementById('results')
+
 searchbar.addEventListener('input', (e) => {
     resultsDiv.innerHTML = ''
     resultantData.filter((data) => {
         return data.header.toLowerCase().includes(e.target.value.toLowerCase())
     }).forEach(showResults)
 })
-input.addEventListener('change', (e) => {
+fileInput.addEventListener('change', (e) => {
     if (e.target.files.length) {
         document.getElementById('button').classList.add('active')
     } else {
@@ -38,7 +45,7 @@ function sortByPresent() {
     resultantData.forEach(showResults)
 }
 async function upload() {
-    const file = input.files[0];
+    const file = fileInput.files[0];
     if (!file) return
     const data = await fetch('/upload', {
         method: 'POST',
