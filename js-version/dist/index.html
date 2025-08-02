@@ -7,33 +7,37 @@
 
     <body>
         <main>
-            <header>
-                <h1>Influenza Sequence Analyzer</h1>
-            </header>
-            <div id="uploader">
-                <h2>Upload Your File</h2>
-                <div class="inputs">
-                    <input type="file" id="fileInput" accept=".fasta" required />
-                    <input type="text" id="indicator" placeholder="Enter Indicator Here">
-                    <input type="text" id="position" placeholder="Enter Position Here">
-                </div>
-                <div id="options">
-                    <div>
-                        <h2>Sort By</h2>
-                        <button onclick="sortByPresent()">Presense</button>
+            <div class="sidepanel">
+                <header>
+                    <h1>Influenza Sequence Analyzer</h1>
+                </header>
+                <div id="uploader">
+                    <h2>Upload Your File</h2>
+                    <div class="inputs">
+                        <input type="file" id="fileInput" accept=".fasta" required />
+                        <input type="text" id="indicator" placeholder="Enter Indicator Here">
+                        <input type="text" id="position" placeholder="Enter Position Here">
                     </div>
-                    <div>
-                        <h2>Search</h2>
-                        <input type="text" id="searchbar" placeholder="Enter Text Here">
+                    <div id="options">
+                        <div>
+                            <h2>Sort By</h2>
+                            <button onclick="sortByPresent()">Presense</button>
+                        </div>
+                        <div>
+                            <h2>Search</h2>
+                            <input type="text" id="searchbar" placeholder="Enter Text Here">
+                        </div>
                     </div>
-                </div>
-                <div class="buttons">
-                    <button id="cancel" class="submitButton" onclick="">Cancel</button>
-                    <button id="button" class="submitButton" onclick="upload()">Upload</button>
+                    <div class="buttons">
+                        <button id="cancel" class="submitButton" onclick="">Cancel</button>
+                        <button id="button" class="submitButton" onclick="upload()">Upload</button>
+                    </div>
                 </div>
             </div>
-            <div id="results">
-            </div>
+            <section class="mainContent">
+                <div id="results">
+                </div>
+            </section>
         </main>
         <script>
             const input = document.getElementById('fileInput')
